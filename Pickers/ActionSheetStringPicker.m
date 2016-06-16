@@ -164,16 +164,18 @@
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    UILabel *pickerLabel = (UILabel *)view;
-    if (pickerLabel == nil) {
-        pickerLabel = [[UILabel alloc] init];
+    
+    UITextView *pickerTextView = (UITextView *)view;
+    if (pickerTextView == nil) {
+        pickerTextView = [[UITextView alloc] init];
     }
-    id obj = (self.data)[(NSUInteger) row];
     
     NSAttributedString *attributeTitle = nil;
     // use the object if it is already a NSString,
     // otherwise, use the description, just like the toString() method in Java
     // else, use String with no text to ensure this delegate do not return a nil value.
+    
+    id obj = (self.data)[(NSUInteger) row];
     
     if ([obj isKindOfClass:[NSString class]])
         attributeTitle = [[NSAttributedString alloc] initWithString:obj attributes:self.pickerTextAttributes];
@@ -184,12 +186,25 @@
     if (attributeTitle == nil) {
         attributeTitle = [[NSAttributedString alloc] initWithString:@"" attributes:self.pickerTextAttributes];
     }
-    pickerLabel.attributedText = attributeTitle;
-    return pickerLabel;
+    
+    pickerTextView.attributedText = attributeTitle;
+    pickerTextView.textAlignment = NSTextAlignmentCenter;
+    pickerTextView.backgroundColor = [UIColor clearColor];
+    pickerTextView.editable = NO;
+    if (self.pickerTextAttributes.count == 0) {
+        
+        pickerTextView.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0f];
+    }
+    
+    return pickerTextView;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     return pickerView.frame.size.width - 30;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+    return 46;
 }
 
 @end
