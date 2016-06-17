@@ -191,7 +191,7 @@
     pickerTextView.textAlignment = NSTextAlignmentCenter;
     pickerTextView.backgroundColor = [UIColor clearColor];
     pickerTextView.editable = NO;
-    if (self.pickerTextAttributes.count == 0) {
+    if ([self.pickerTextAttributes valueForKey:@"NSFont"] == nil) {
         
         pickerTextView.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0f];
     }
@@ -204,7 +204,7 @@
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return 46;
+    return 47;
 }
 
 @end
